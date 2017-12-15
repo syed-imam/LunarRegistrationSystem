@@ -1,0 +1,362 @@
+<!--class page -->
+<div class="container marginTopExtra fadeIn">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <p class="tabber" data-toggle="tab" href="#view" ng-click="getAllClasses(); disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View</p>
+        </li>
+        <li>
+            <p class="tabber" data-toggle="tab" href="#add" ng-click="display2=false; display1=true; selectedIndex = 0;"><i class="fa fa-plus" aria-hidden="true"></i>Add</p>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="add" class="tab-pane fade in">
+            <!--   <h2 class="text-center"><i class="fa fa-plus" aria-hidden="true"></i> Add a course</h2> -->
+            <form name="addForm" class="form-horizontal">
+                <div class="well">
+                    <h4>Class Information</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="firstname">Course ID:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="class.crn" class="form-control" id="crn" placeholder="Course Number" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="firstname">Section:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="class.section" class="form-control" id="section" placeholder="Section Number" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="lastname">Semester:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" ng-model="class.semester" id="semester">
+                                <option>Spring</option>
+                                <option>Summer</option>
+                                <option>Fall</option>
+                                <option>Winter</option>
+                            </select>
+                        </div>
+                        <!--    <input type="text" ng-model="course.title" class="form-control" id="lastname" required> </div> -->
+                        <div class="col-sm-5">
+                            <select class="form-control" ng-model="class.year" id="year"> </select>
+                        </div>
+                    </div>
+                    <script>
+                        var text = '';
+                        for (var i = 2016; i < 2019; i++) {
+                            text += "<option>" + i + "</option>";
+                        }
+                        $("#year").html(text.trim());
+                    </script>
+                    
+                    
+       <div class="form-group">
+                        <label class="control-label col-sm-2" for="faculty">Professor:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="faculty" id="faculty" ng-options="faculty.user_fname + ' ' + faculty.user_lname for faculty in facultys track by faculty.faculty_id" required></select>
+                        </div>
+      </div>
+                    
+         <!--           
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Professor:</label>
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="class.firstprofessor" class="form-control" id="profname" placeholder="Primary Faculty"> </div>
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="class.secondprofessor" class="form-control" id="profname" placeholder="Secondary Faculty"> </div>
+                    </div>
+                    
+          -->            
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="password">Location</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="building" ng-blur="generateRooms();" ng-model="class.building" required>
+                                <option value="New Academic Building">New Academic Building</option>
+                                <option value="Campus Center">Campus Center</option>
+                                <option value="Natural Sciences">Natural Sciences</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <select class="form-control" ng-options="room as room.room_number for room in rooms track by room.room_number" ng-model="class.room" id="room" ng-required> </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Days</label>
+                        <div class="col-sm-10">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="days1" id="d1" value="1" ng-model="class.mon">Mon</label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="days1"id="d1" value="2" ng-model="class.tue">Tue</label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="days1" id="d1"value="3" ng-model="class.wed">Wed</label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="days1" id="d1"value="4" ng-model="class.thu">Thu</label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="days1"id="d1" value="5" ng-model="class.fri">Fri</label>
+                            <label class="checkbox-inline"><i><small>(Select only 2 days)</small></i></label>
+                            <!-- it selects only days which are true -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Timeperiod</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="class.timeperiod" id="timeslot" required>
+                                <option value="1" selected>08:00am - 09:30am</option>
+                                <option value="2">09:40am - 11:10am</option>
+                                <option value="3">11:20am - 12:50pm</option>
+                                <option value="4">01:00pm - 02:30pm</option>
+                                <option value="5">03:50pm - 05:20pm</option>
+                                <option value="6">05:30pm - 07:00pm</option>
+                                <option value="7">07:10pm - 08:40pm</option>
+                                <option value="8">08:50pm - 10:20pm</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" ng-disabled="!addForm.$valid" ng-click="addClass()" class="btn btn-default btn-block">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div id="view" ng-show="display1" class="tab-pane fade in active">
+            <div class="container search-bar well">
+                <div class="form-group">
+                    <div class="col-sm-2 custom-label">
+                        <label class="control-label pull-right" for="idnumber">Term</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <select ng-model="selectedterm" ng-change="coursefilter='';" class="form-control" id="idnumber" ng-required>
+                            <option value="1">Spring 2016</option>
+                            <option value="2">Summer 2016</option>
+                            <option value="3">Fall 2016</option>
+                            <option value="4">Winter 2016</option>
+                            <option value="5">Spring 2017</option>
+                            <option value="6">Summer 2017</option>
+                            <option value="7">Fall 2017</option>
+                            <option value="8">Winter 2017</option>
+                            <option value="9">Spring 2018</option>
+                            <option value="10">Summer 2018</option>
+                            <option value="11">Fall 2018</option>
+                            <option value="12">Winter 2018</option>
+                       
+                        
+                          </select>
+                    </div>
+                    <!-- ng-if removes it from the DOM -->
+                    <div class="col-sm-1 custom-label">
+                        <label class="control-label pull-right" for="idnumber">Department</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-model="department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default" ng-click="searchClasses()">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <th>Action</th>
+                    <th>ID</th>
+                    <th>Section</th>
+                    <th>Course Title</th>
+                    <th>Professor</th>                    
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Term</th>
+                    <th>Days</th>
+                    <th>Time</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="crc in classes" ng-cloak>
+                        <td><a class="btn btn-info btn-sm" href="" ng-click="updateformdata(crc)"><i class="fa fa-eye" aria-hidden="true"></i> | View</a></td>
+                        <td>{{crc.class_id}}</td>
+                        <!-- pass that crc into controller-->
+                        <td>{{crc.section}}</td>
+                        <td>{{crc.course_name}}</td>
+                        <td>{{crc.user_fname+" "+crc.user_lname}}</td>
+                        <td>{{crc.building_name}}</td>
+                        <td>{{crc.room_number}}</td>
+                        <td>{{crc.semester+" "+crc.YEAR}}</td>
+                        <td>{{crc.day1+"/"+crc.day2}}</td>
+                        <td>{{crc.start_time+" to "+crc.end_time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-include="'pages/pagination.htm'"></div>
+        </div>
+        <div id="update" ng-show="display2" class="fade in">
+            <!--   <h2 class="text-center"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update a course</h2> -->
+            <div class="container">
+                <form name="updateForm" class="form-horizontal">
+                    <h2 class="text-center"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update a class</h2>
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <h4>Course Details</h4> </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete class?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click="disabledField=!disabledField"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="getAllClasses(); resetCheckedDays();toggle();"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+                        </div>
+                        <hr>
+                        <fieldset ng-disabled="disabledField">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="coursename">Title:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="crctitle" class="form-control" id="crn" placeholder="Course Number" disabled> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="section">Section:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="section" class="form-control" id="section" placeholder="Section Number" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="lastname">Semester:</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" ng-model="semester" id="semester">
+                                    <option>Spring</option>
+                                    <option>Summer</option>
+                                    <option>Fall</option>
+                                    <option>Winter</option>
+                                </select>
+                            </div>
+                            <!--    <input type="text" ng-model="course.title" class="form-control" id="lastname" required> </div> -->
+                            <div class="col-sm-5">
+                                <select class="form-control" ng-model="year" id="year2"> </select>
+                            </div>
+                        </div>
+                        <script>
+                            var text = '';
+                            for (var i = 2017; i < 2100; i++) {
+                                text += "<option>" + i + "</option>";
+                            }
+                            $("#year2").html(text.trim());
+                        </script>
+                    
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="faculty">Professor:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" ng-model="faculty1" id="faculty1" ng-options="faculty1.user_fname + ' ' + faculty1.user_lname for faculty1 in facultys track by faculty1.faculty_id" required></select>
+                                </div>
+
+                      </div>
+                  
+                       
+                       
+                       <!--    
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Professor:</label>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="professor" class="form-control" id="profname" placeholder="Primary Faculty"> </div>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="professor" class="form-control" id="profname" placeholder="Secondary Faculty"></div>
+                        </div>
+                    -->    
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="password">Location</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" id="building" ng-change="generateRooms();" ng-model="class.building" required>
+                                    <option value="New Academic Building">New Academic Building</option>
+                                    <option value="Campus Center">Campus Center</option>
+                                    <option value="Natural Sciences">Natural Sciences</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" ng-options="room as room.room_number for room in rooms track by room.room_number" ng-model="room" id="room" ng-required> </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Days</label>
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="days2" id="d2" value="1" ng-model="mon">Mon</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="days2" id="d2" value="2" ng-model="tue">Tue</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="days2" id="d2" value="3" ng-model="wed">Wed</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="days2" id="d2" value="4" ng-model="thu">Thu</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="days2" id="d2" value="5" ng-model="fri">Fri</label>
+                                <label class="checkbox-inline"><i><small>(Select only 2 days)</small></i></label>
+                                <!-- it selects only days which are true -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Timeperiod</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="time" id="timeslot" required>
+                                    <option value="1" selected>08:00am - 09:30am</option>
+                                    <option value="2">09:40am - 11:10am</option>
+                                    <option value="3">11:20am - 12:50pm</option>
+                                    <option value="4">01:00pm - 02:30pm</option>
+                                    <option value="5">03:50pm - 05:20pm</option>
+                                    <option value="6">05:30pm - 07:00pm</option>
+                                    <option value="7">07:10pm - 08:40pm</option>
+                                    <option value="8">08:50pm - 10:20pm</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" ng-click="updateClass()" class="btn btn-default btn-block">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- little script to change the active -->
+        </div>
+    </div>
+    <script>
+        
+        
+        $('input[name=days1]').on('change', function (e){
+            
+        //    console.log("days1 ", $('input[name=days1]:checked').length);
+        //     console.log("days2 ", $('input[name=days2]:checked').length);
+           if($('input[name=days1]:checked').length>2) {
+                
+                $(this).prop('checked', false); 
+            }           
+                
+           });    
+    
+        $('input[name=days2]').on('change',function (e1){
+        
+            
+            if($('input[name=days2]:checked').length>2){
+                
+                $(this).prop('checked', false);
+            
+            }
+        });
+          
+          
+        //This code does not work for some reason
+        $('#pageLinks').on("click", function () {
+            console.log("I am here");
+            //$('#shrink-options li.active').removeClass('active');
+            // $(this).addClass('active');        
+        });
+        $('#shrink-options ul li').on("click", function () {
+            console.log("I am here");
+            //$('#shrink-options li.active').removeClass('active');
+            // $(this).addClass('active');        
+        });
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]'
+            , placement: 'left'
+            , onConfirm: function () {
+                    console.log("delete successful");
+                    angular.element($(this)).scope().deleteCourse(); //this is the document itself
+                }
+                // other options
+        });
+    </script>

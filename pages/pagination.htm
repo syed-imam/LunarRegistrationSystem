@@ -1,0 +1,7 @@
+<nav aria-label="...">
+    <ul class="pagination text-center">
+        <li class="page-item"> <a class="page-link" href="" tabindex="-1" ng-click="itemClicked(selectedIndex-1); movePage(selectedIndex);" ng-class="{disabled: selectedIndex===0}">Prev</a> </li>
+        <li ng-class="{active: $index===selectedIndex}" class="page-item" ng-repeat="page in pagesCollection track by $index"> <a class="page-link" id="pageLinks" href="" ng-click="itemClicked($index); movePage(page-1);">{{page}}</a> </li>
+        <li class="page-item"><a class="page-link" ng-click="itemClicked(selectedIndex+1); movePage(selectedIndex);" href="" ng-class="{disabled: selectedIndex===pages-1}">Next</a></li>
+    </ul>
+</nav>

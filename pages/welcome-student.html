@@ -1,0 +1,72 @@
+<div class="container marginTopExtra">
+    <section ng-if="loggedIn" id="student-information">
+
+        <div class="container">
+            <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Personal Information</h4>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="media">
+                        <div class="media-left"> <i class="fa fa-user" aria-hidden="true"></i> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading" ng-cloak>{{name}}</h4>
+                            <ul>
+                                <li><b>Level:</b> Undergraduate</li>
+                                <li><b>Degree:</b> Computer Science</li>
+                                <li><b>Catalog Term:</b> Fall 2012</li>
+                                <li><b>GPA:</b> 3.38</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Course Number</th>
+                                <th>Schedule</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Environmental Analysis of LI</td>
+                                <td>CP 2600 - Lecture - 001</td>
+                                <td>M &amp; W - 5:30PM to 7:00PM</td>
+                                <td>4.00</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Avanced VB &amp; DB Appl Prog</td>
+                                <td>CP 3611 - Lecture - 001</td>
+                                <td>T &amp; R - 1:00PM to 2:30PM</td>
+                                <td>4.00</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Systems</td>
+                                <td>CS 5610 - Lecture - 001</td>
+                                <td>T &amp; R - 3:50PM to 5:20PM</td>
+                                <td>4.00</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>System Design &amp; Implementation</td>
+                                <td>CS 5910 - Lecture - 001</td>
+                                <td>T &amp; R - 7:10PM to 8:40PM</td>
+                                <td>4.00</td>
+                                <td>N/A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section ng-if="!loggedIn">
+        <h1>Noooo</h1>
+    </section>
+</div>

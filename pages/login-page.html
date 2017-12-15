@@ -1,0 +1,46 @@
+<div class="jumbotron">
+    <div class="container text-left">
+        <h3>Lunar Registration Systems - Login</h3>
+    </div>
+</div>
+
+<div class="container fadeIn">
+    <div class="container">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+
+            <!--ng show it -->
+            <div ng-show="flag" class="alert alert-danger text-center">
+                <p>E-mail and password do not match!</p>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form name="loginForm" class="form-horizontal" novalidate="">
+                        <div class="form-group">
+                            <label class="col-sm-12" for="username">Username:</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="username" ng-model="username" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-12" for="password">Password:</label>
+                            <div class="col-sm-12">
+                                <input type="password" id="password" ng-model="password" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <input type="submit" ng-click="logIn()" class="btn btn-success btn-block" id="submit" value="Login">
+                            </div>
+
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

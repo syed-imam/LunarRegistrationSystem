@@ -1,0 +1,114 @@
+<div ng-show="display1">
+
+	<div class="jumbotron bg-research">
+		<div class="container text-left">
+			<h3><i class="fa fa-cogs" aria-hidden="true"></i> Researcher Panel</h3>
+		</div>
+	</div>
+
+	<div class="container fadeIn" data-ng-init="">
+		<div class="row text-center">
+			<a ng-click="display4=true; display1=false; display5=false; display2=false; display3=false" class="iconBox">
+				<div class="col-sm-3 margins"><i class="fa fa-th-list bigIcon" aria-hidden="true"></i>
+					<h4>Course Enrollment</h4>
+				</div>
+			</a>
+			<a ng-click="display5=true; display1=false; display4=false; display3=false; display2=false;" class="iconBox">
+				<div class="col-sm-3 margins"><i class="fa fa-table bigIcon" aria-hidden="true"></i>
+					<h4>Average Course GPA</h4>
+				</div>
+			</a>
+			<a ng-click="display2=true; display1=false; display5=false; display4=false; display3=false" class="iconBox">
+				<div class="col-sm-3 margins"><i class="fa fa-th bigIcon" aria-hidden="true"></i>
+					<h4>Major Enrollment</h4>
+				</div>
+			</a>
+			<a ng-click="display2=false; display1=false; display5=false; display4=false; display3=true;" class="iconBox">
+				<div class="col-sm-3 margins"><i class="fa fa-th bigIcon" aria-hidden="true"></i>
+					<h4>Minor Enrollment</h4>
+				</div>
+			</a>
+		</div>
+	</div>
+
+</div>
+
+<div class="container marginTopExtra fadeIn" ng-show="display2">
+	<a class="btn btn-large btn-default pull-left" ng-click="display1=true; display5=false; display4=false; display2=false; display3=false"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<table class="table table-striped">
+		<thead>
+			<th>Major Name</th>
+			<th>Count of Students Enrolled</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="major in majorCountData">
+				<td>{{ major.major_name }}</td>
+				<td>{{ major.count }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="container marginTopExtra fadeIn" ng-show="display3">
+	<a class="btn btn-large btn-default pull-left" ng-click="display1=true; display5=false; display4=false; display2=false; display3=false"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<table class="table table-striped">
+		<thead>
+			<th>Minor Name</th>
+			<th>Count of Students Enrolled</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="minor in minorCountData">
+				<td>{{ minor.minor_name }}</td>
+				<td>{{ minor.count }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="container marginTopExtra fadeIn" ng-show="display4">
+	<a class="btn btn-large btn-default pull-left" ng-click="display1=true; display2=false; display5=false; display3=false; display4=false;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+	<table class="table table-striped">
+		<tbody ng-repeat="semester in courseCountData">
+			<tr>
+				<td colspan=100% style="background: white">
+					<h3 class="text-center">{{semester[0].Term}}</h3>
+				</td>
+			</tr>
+			<tr>
+				<th>Course ID</th>				
+				<th>Course Name</th>
+				<th>Enrollment</th>
+			</tr>
+			<tr ng-repeat="tclass in semester">
+				<td>{{tclass.course_id}}</td>				
+				<td>{{tclass.course_name}}</td>
+				<td>{{tclass.Total}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="container marginTopExtra fadeIn" ng-show="display5">
+	<a class="btn btn-large btn-default pull-left" ng-click="display1=true; display2=false; display4=false; display5=false; display3=false; display4=false;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+	<table class="table table-striped">
+		<tbody ng-repeat="semester in courseGradeAverage">
+			<tr>
+				<td colspan=100% style="background: white">
+					<h3 class="text-center">{{semester[0].Term}}</h3>
+				</td>
+			</tr>
+			<tr>
+				<th>Course ID</th>				
+				<th>Course Name</th>
+				<th>Average GPA</th>
+			</tr>
+			<tr ng-repeat="tclass in semester">
+				<td>{{tclass.course_id}}</td>				
+				<td>{{tclass.course_name}}</td>
+				<td>{{tclass.Average | number:2}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

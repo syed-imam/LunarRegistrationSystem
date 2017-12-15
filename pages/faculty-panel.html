@@ -1,0 +1,190 @@
+<div class="jumbotron bg-faculty">
+    <div class="container text-left">
+        <h3><i class="fa fa-cogs" aria-hidden="true"></i> Faculty Panel</h3>
+    </div>
+</div>
+
+<div class="container"  ng-show="notInClass">
+        <div class="well">
+            <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Personal Information</h4>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <i class="fa fa-user" aria-hidden="true"></i> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading" ng-cloak>{{name}}</h4>
+                            <ul>
+                                <li><b>Name:</b>{{facultyFullName.user_fname+" "+facultyFullName.user_lname }}</li>
+                                <li><b>Department:</b> {{facultyFullName.department_name}}</li>
+                                 <li><b>Email:</b> {{facultyFullName.user_email}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+  
+            </div>
+        </div>
+ </div>
+
+    <div class="container" ng-show="notInClass">   
+        <hr>
+        <h4>{{currentSemester +"  "+currentYear +" Classes"}}</h4>
+        <div class="col-md-12">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Course Name</th>
+                        <th>Building</th>
+                        <th>Room</th>
+                        <th>Days</th>
+                        <th>Hours</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="class in classes">
+                        <td><a class="btn btn-info btn-sm" ng-click="showThisClass(class);"><i class="fa fa-eye" aria-hidden="true"></i> {{class.class_id}}</a></td>
+                        <td>{{class.course_name}}</td>
+                        <td>{{class.building_name}}</td>
+                        <td>{{class.room_number}}</td>
+                        <td>{{class.day1}} - {{class.day2}}</td>
+                        <td>{{class.start_time}} - {{class.end_time}}</td>
+                        <td>{{class.credits}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>    
+
+
+<div class="container fadeIn" data-ng-init="getClassesTaught(); getAdvisees();">
+    <div class="container" ng-show="notInClass">
+        <h4>Students Advised</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="student in adviseeList">
+                    <td>{{student.user_id}}</td>
+                    <td>{{student.user_fname}}</td>
+                    <td>{{student.user_lname}}</td>
+                    <td>{{student.user_email}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>    
+    
+
+    <div class="container" ng-show="!notInClass">
+        <a class="btn btn-large btn-default pull-right" ng-click="toggle()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        <h2>{{selectedClass.course_name + ' - ' + selectedClass.semester + ' ' + selectedClass.year }}</h2>
+        <div class="col-md-12">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in allStudentInThisClass">
+                        <td>{{student.user_fname + " " + student.user_lname}}</td>
+                        <td>
+                            <select ng-model="student.enrol_grade" ng-change="insertGrade(student.enrol_grade, student.user_id);">
+                                <option value="4">A</option>
+                                <option value="3.67">A-</option>
+                                <option value="3.33">B+</option>
+                                <option value="3">B</option>
+                                <option value="2.7">B-</option>
+                                <option value="2.3">C+</option>
+                                <option value="2">C</option>
+                                <option value="1.7">C-</option>
+                                <option value="1.3">D+</option>
+                                <option value="1">D</option>
+                                <option value="0">F</option>
+                            </select>
+                           
+                            
+                          
+                        </td>
+                        <!-- can we get these grades as an array? -->
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" class="btn btn-primary pull-right" ng-click="submitGrades()" value="Submit grades">
+        </div>
+    </div>
+</div>
+
+<div class="container" ng-show="!notInClass">
+ 
+    <h2>{{"Attendace for "+ selectedClass.course_name + ' - ' + selectedClass.semester + ' ' + selectedClass.year }}</h2>
+
+    <div class="container">
+        <div class="search-bar well">
+            <div class="form-group">
+            
+            <div class="row">        
+                <div class="col-sm-3">
+                    <label class="custom-label pull-right" for="idnumber">Select Date</label>
+                </div>
+                <div class="col-sm-6">
+                    <input ng-model="selectedDate" class="form-control" type="date" min="{{semesterStart}}" max="{{endSemester}}"/>
+                                
+                </div>
+                <!-- ng-if removes it from the DOM -->
+                <div class="col-sm-3">
+                    <button class="btn btn-default" ng-click="showAttendanceSheet();">Submit</button>
+                </div>
+             </div>    
+          </div>
+        </div>
+    </div>
+
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12" ng-show="showAttendance">
+
+
+        <table class="table table-striped" style="margin-top:5%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="student in allStudentInThisClass">
+                    <td>{{student.user_fname + " " + student.user_lname}}</td>
+                    <td>
+                        <select ng-model="attend" ng-change="insertAttendance(attend, student.user_id);">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                        </select>
+                    </td>
+                    <!-- can we get these grades as an array? -->
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="submit" class="btn btn-primary pull-right" ng-click="submitAttendance()" value="Submit Attendance">
+
+    </div>
+</div>
+</div>
+
+
+</div>

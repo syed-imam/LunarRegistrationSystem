@@ -1,0 +1,151 @@
+<div class="container fadeIn">
+    <!--class page -->
+    <div class="container marginTopExtra fadeIn">
+
+        <!-- VIEW -------------------------------------------------------------->
+        <div id="view" class="fade in">
+            <br>
+            <div class="container  well">
+                <div class="row class-border">
+                    <p> Course Registration - <b>{{nextSemester+" "+nextYear}} </b> 
+                    <p>Credits registered: <b>{{ creditsEarned }}</b></p>
+                    <div class="col-md-3 registered-courses" ng-repeat="cc in selectedClasses">
+                        <div class="adilwhite text-center">
+                            {{cc.course_name}}
+
+                            <div class="pull-right deletestyle">
+                                <a ng-if="deleteAble" href="" ng-click="dropCourse(cc.class_id, cc.credits)" data-toggle="confirmation" data-title="Drop Course?"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </div>
+
+                            <div class="extra-info">
+                                <br><b>ClassID</b> {{ cc.class_id}}
+                                <br><b>Section</b> {{ cc.section}}
+                                <br><b>Credits</b> {{ cc.credits}}
+                                <br><b>Days</b> {{ cc.day1+"/"+cc.day2}}
+                                <br><b>Time</b> {{ cc.start_time+"-"+cc.end_time}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container search-bar well">
+                <div class="form-group">
+                    <!-- ng-if removes it from the DOM -->
+                    <div class="col-sm-2 custom-label">
+                        <label class="control-label pull-right" for="idnumber">Department</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control" ng-model="department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default" ng-click="searchClasses()">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <th>Action</th>
+                    <th>Semester</th>
+                    <th>ID</th>
+                    <th>Section</th>
+                    <th>Course Title</th>
+                    <th>Professor</th>
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Credits</th>
+                    <th>Days</th>
+                    <th>Time</th>
+                    <th>Available</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="crc in classes" ng-cloak>
+                        <td><a class="btn btn-info btn-sm" href="" ng-click="register(crc.class_id, crc.credits, crc.room_capacity, crc.room_number, crc.day1, crc.day2, crc.start_time, crc.end_time, crc.building_name, crc.course_name)"> Register</a></td>
+                        <td>{{crc.semester + ' ' + crc.YEAR}}</td>
+                        <td>{{crc.class_id}}</td>
+                        <!-- pass that crc into controller-->
+                        <td>{{crc.section}}</td>
+                        <td><a style="text-decoration:none;color:blue" href="" ng-click="showCourseDescription(crc.course_description)" data-toggle="modal" data-target="#myModal">{{crc.course_name}}</a></td>
+                        <td>{{crc.user_fname+" "+crc.user_lname}}</td>
+                        <td>{{crc.building_name}}</td>
+                        <td>{{crc.room_number}}</td>
+                        <td>{{crc.credits}}</td>
+                        <td>{{crc.day1+"/"+crc.day2}}</td>
+                        <td>{{crc.start_time+"-"+crc.end_time}}</td>
+                        <td>{{crc.seats_available}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-include="'pages/pagination.htm'"></div>
+        </div>
+
+    </div>
+
+
+    <!-- Large modal -->
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Course Description</h4>
+                </div>
+                <div class="modal-body">
+                    {{selectedClassDescription}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        $('input[name=days1]').on('change', function(e) {
+            //    console.log("days1 ", $('input[name=days1]:checked').length);
+            //     console.log("days2 ", $('input[name=days2]:checked').length);
+            if ($('input[name=days1]:checked').length > 2) {
+                $(this).prop('checked', false);
+            }
+        });
+        $('input[name=days2]').on('change', function(e1) {
+            if ($('input[name=days2]:checked').length > 2) {
+                $(this).prop('checked', false);
+            }
+        });
+        //This code does not work for some reason
+        $('#pageLinks').on("click", function() {
+            console.log("I am here");
+            //$('#shrink-options li.active').removeClass('active');
+            // $(this).addClass('active');        
+        });
+        $('#shrink-options ul li').on("click", function() {
+            console.log("I am here");
+            //$('#shrink-options li.active').removeClass('active');
+            // $(this).addClass('active');        
+        });
+
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            placement: 'bottom',
+            onConfirm: function() {
+                    console.log("delete successful");
+                    angular.element($(this)).scope().deleteCourse(); //this is the document itself
+                }
+                // other options
+        });
+    </script>
+</div>

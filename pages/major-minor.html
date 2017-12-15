@@ -1,0 +1,254 @@
+<div class="container marginTopExtra fadeIn">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<p class="tabber" data-toggle="tab" href="#add" ng-click="display2=false; display3=false; display4=false; display1=false; selectedIndex = 0;"><i class="fa fa-plus" aria-hidden="true"></i>Add</p>
+		</li>
+		<li>
+			<p class="tabber" data-toggle="tab" href="#viewMajor" ng-click="getAllMajors(); display2=false; display3=false; display4=false; display1=true; display6=false; display7=false; selectedIndex = 0; disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View Majors</p>
+		</li>
+		<li>
+			<p class="tabber" data-toggle="tab" href="#viewMinor" ng-click="getAllMinors(); display2=false; display3=true; display4=false; display1=false; display6=false; display7=false; selectedIndex1 = 0; disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View Minors</p>
+		</li>
+	</ul>
+	<div class="tab-content">
+
+		<!-- ADD -------------------------------------------->
+
+		<div id="add" class="tab-pane fade in active">
+			<form name="addForm" class="form-horizontal">
+				<br>
+				<div class="well">
+					<h4>Major/Minor Information</h4>
+					<hr>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="mType">Type:</label>
+						<div class="col-sm-10">
+							<label class="radio-inline">
+                                <input type="radio" name="mType" ng-model="major.type" value="Major" required>Major</label>
+							<label class="radio-inline">
+                                <input type="radio" name="mType" ng-model="major.type" value="Minor">Minor</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="departmentName">Department Name</label>
+						<div class="col-sm-10">
+							<select class="form-control" ng-model="major.department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="majorname">Major/Minor Name:</label>
+						<div class="col-sm-10">
+							<input type="text" ng-model="major.name" class="form-control" id="majorname" required> </div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" ng-disabled="!addForm.$valid" ng-click="addMajor()" class="btn btn-default btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- VIEW -------------------------------------------->
+
+		<div id="viewMajor" ng-show="display1" class="tab-pane ">
+			<div class="container search-bar well">
+				<div class="form-group">
+					<div class="col-sm-2 custom-label">
+						<label class="control-label pull-right" for="idnumber">Search By</label>
+					</div>
+					<div class="col-sm-3">
+						<select ng-model="selectedfilter" ng-change="majorfilter='';switchInputMethod()" class="form-control" id="idnumber" ng-required>
+                            <option value="MajorName">Major Name</option>
+                            <option value="Department">Department</option>
+                        </select>
+					</div>
+					<!-- ng-if removes it from the DOM -->
+					<div class="col-sm-5" ng-show="otheroptiontextfield">
+						<input type="text" ng-model="majorfilter" class="form-control" id="idnumber" ng-disabled="allowinput"> </div>
+					<div class="col-sm-5" ng-show="departmentdropdownlist">
+						<select class="form-control" ng-model="department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+					</div>
+					<div class="col-sm-2">
+						<button class="btn btn-default" ng-click="getMajorById()">Submit</button>
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
+			<h2 class="text-center"><i class="fa fa-eye" aria-hidden="true"></i> View Majors</h2>
+			<table class="table table-striped">
+				<thead>
+					<th>Action</th>
+					<th>Major Name</th>
+					<th>Department Name</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="major in majors">
+						<td><a class="btn btn-info btn-sm" ng-click="updateFormData(major); display2=true; display3=false; display4=false; display1=false;"><i class="fa fa-eye" aria-hidden="true"></i> | View </a></td>
+						<td>{{ major.major_name }}</td>
+						<td>{{ major.department_name }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div ng-include="'pages/pagination.htm'"></div>
+		</div>
+
+
+		<div id="viewMinor" ng-show="display3" class="tab-pane fade in ">
+			<div class="container search-bar well">
+				<div class="form-group">
+					<div class="col-sm-2 custom-label">
+						<label class="control-label pull-right" for="idnumber">Search By</label>
+					</div>
+					<div class="col-sm-3">
+						<select ng-model="selectedfilter1" ng-change="minorfilter='';switchInputMethod1()" class="form-control" id="idnumber" ng-required>
+                            <option value="MinorName">Minor Name</option>
+                            <option value="Department">Department</option>
+                        </select>
+					</div>
+					<div class="col-sm-5" ng-show="otheroptiontextfield1">
+						<input type="text" ng-model="minorfilter" class="form-control" id="idnumber" ng-disabled="allowinput"> </div>
+					<div class="col-sm-5" ng-show="departmentdropdownlist1">
+						<select class="form-control" ng-model="department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+					</div>
+					<div class="col-sm-2">
+						<button class="btn btn-default" ng-click="getMinorById()">Submit</button>
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
+			<h2 class="text-center"><i class="fa fa-eye" aria-hidden="true"></i> View Minors</h2>
+			<table class="table table-striped">
+				<thead>
+					<th>Action</th>
+					<th>Minor Name</th>
+					<th>Department Name</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="minor in minors">
+						<td><a class="btn btn-info btn-sm" ng-click="updateFormData1(minor); display2=false; display3=true; display4=false; display1=false; selectedIndex1 = 0;"><i class="fa fa-eye" aria-hidden="true"></i> | View </a></td>
+						<td>{{ minor.minor_name }}</td>
+						<td>{{ minor.department_name }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<nav aria-label="...">
+				<ul class="pagination text-center">
+					<li class="page-item"> <a class="page-link" href="" tabindex="-1" ng-click="itemClicked1(selectedIndex1-1); movePage1(selectedIndex1);" ng-class="{disabled: selectedIndex1===0}">Prev</a> </li>
+					<li ng-class="{active: $index===selectedIndex1}" class="page-item" ng-repeat="page in pagesCollection track by $index"> <a class="page-link" id="pageLinks" href="" ng-click="itemClicked1($index); movePage1(page-1);">{{page}}</a> </li>
+					<li class="page-item"><a class="page-link" ng-click="itemClicked1(selectedIndex1+1); movePage1(selectedIndex1);" href="" ng-class="{disabled: selectedIndex1===pages-1}">Next</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<!-- UPDATE -------------------------------------------->
+
+		<div id="updateMajor" ng-show="display2" class="fade in">
+			<form name="updateForm" class="form-horizontal">
+				<br>
+				<div class="well">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6">
+							<h4>Major Details</h4>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete major?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click="display6= !display6; disabledField = !disabledField"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="toggle()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+					</div>
+					<hr>
+					<fieldset ng-disabled="disabledField">
+						<div class="form-group">
+
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="omajorname">Major Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="oMajor.name" class="form-control" id="omajorname" disabled> </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="odepartment">Department Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="oMajor.department" class="form-control" id="odepartmentname" disabled> </div>
+						</div>
+						<div ng-show="display6" class="form-group">
+							<label class="control-label col-sm-2" for="majorname">New Major Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="uMajor.name" class="form-control" id="majorname" required> </div>
+						</div>
+						<div ng-show="display6" class="form-group">
+							<label class="control-label col-sm-2" for="department">New Department:</label>
+							<div class="col-sm-10">
+								<select class="form-control" ng-model="uMajor.department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select> </div>
+						</div>
+					</fieldset>
+				</div>
+				<div ng-show="display6" class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" ng-disabled="!updateForm.$valid" ng-click="updateMajor()" class="btn btn-default btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div id="updateMinor" ng-show="display4" class="fade in">
+			<form name="updateForm1" class="form-horizontal">
+				<br>
+				<div class="well">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6">
+							<h4>Minor Details</h4>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete major?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click=" display7=!display7; disabledField = !disabledField;"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="toggle1()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+					</div>
+					<hr>
+					<fieldset ng-disabled="disabledField">
+						<div class="form-group">
+
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="ominorname">Minor Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="oMinor.name" class="form-control" id="ominorname" disabled> </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="odepartment">Department Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="oMinor.department" class="form-control" id="odepartmentname" disabled> </div>
+						</div>
+						<div ng-show="display7" class="form-group">
+							<label class="control-label col-sm-2" for="minorname">New Minor Name:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="uMinor.name" class="form-control" id="minorname" required> </div>
+						</div>
+						<div ng-show="display7" class="form-group">
+							<label class="control-label col-sm-2" for="department">New Department:</label>
+							<div class="col-sm-10">
+								<select class="form-control" ng-model="uMinor.department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select> </div>
+						</div>
+					</fieldset>
+				</div>
+				<div ng-show="display7" class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" ng-disabled="!updateForm1.$valid" ng-click="updateMinor()" class="btn btn-default btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+		placement: 'left',
+		onConfirm: function() {
+			angular.element($(this)).scope().deleteStudent();
+		}
+	});
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>

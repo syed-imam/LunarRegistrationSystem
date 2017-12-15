@@ -1,0 +1,70 @@
+<div class="jumbotron bg-study">
+    <div class="container text-left">
+        <h3><i class="fa fa-cogs" aria-hidden="true"></i> Student Panel</h3>
+    </div>
+</div>
+
+<div class="container fadeIn" data-ng-init="getStudentHolds(); getAllStudents(); showTranscript();">
+    <div class="row text-center">
+        <a href="#!/student-class" class="iconBox">
+            <div class="col-sm-3 margins"><i class="fa fa-plus-square-o bigIcon" aria-hidden="true"></i>
+                <h4>Add/Drop Classes</h4>
+            </div>
+        </a>
+        <a href="#!/transcript" class="iconBox">
+            <div class="col-sm-3 margins"><i class="fa fa-file-text-o bigIcon" aria-hidden="true"></i>
+                <h4>View Transcript</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="container">
+        <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Personal Information</h4>
+        <hr>
+        <div class="row">
+            <h3 class="media-heading" ng-cloak>{{thisStudent[0].user_fname + ' ' + thisStudent[0].user_lname}}</h3>
+            
+            <div class="col-md-12">
+                <div class="media">
+                    <div class="media-left"> <i class="fa fa-user" aria-hidden="true"></i> </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" ng-cloak>{{thisStudent.user_fname + ' ' + thisStudent.user_lname}}</h4>
+                        <ul>
+                            <li><b>Level:</b> {{studentStanding}}</li>
+                            <li><b>Degree:</b> {{ thisStudentInfo[0].major_name }}</li>
+                            <li><b>Cumulative GPA:</b> {{ accumulatedGPA.toFixed(2); }}</li>
+                            <li><b>Holds:</b><span ng-show="!thisHolds.length"> You have no holds</span> <span ng-repeat="hold in thisHolds">{{$index + 1}}-{{hold.hold_name}}. </span></li>
+                            <li><b>Credits Applied:</b>{{" "+totalCreditsStudent}}</li>
+            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Building</th>
+                            <th>Room</th>
+                            <th>Days</th>
+                            <th>Hours</th>
+                            <th>Credits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="class in selectedClasses">
+                            <td>{{class.course_name}}</td>
+                            <td>{{class.building_name}}</td>
+                            <td>{{class.room_number}}</td>
+                            <td>{{class.day1}} - {{class.day2}}</td>
+                            <td>{{class.start_time}} - {{class.end_time}}</td>
+                            <td>{{class.credits}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container marginTopExtra fadeIn" data-ng-init="getStudentHolds(); getAllStudents(); showTranscript();">
+
+    <div class="container">
+        <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Student Transcript</h4>
+        <hr>
+        <div class="row">
+            <h3 class="media-heading" ng-cloak>{{thisStudent[0].user_fname + ' ' + thisStudent[0].user_lname}}</h3>
+
+            <div class="col-md-12">
+                <div class="media">
+                    <div class="media-left"> <i class="fa fa-user" aria-hidden="true"></i> </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" ng-cloak>{{thisStudent.user_fname + ' ' + thisStudent.user_lname}}</h4>
+                        <ul>
+                            <li><b>Degree:</b> {{ thisStudentInfo[0].major_name }}</li>
+                            <li><b>Cumulative GPA:</b> {{ accumulatedGPA | number : 2 }}</li>
+                            <li><b>Credits Applied:</b>{{" "+totalCreditsStudent}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <table class="table table-striped">
+                    <tbody ng-repeat="semester in transcriptClasses">
+                        <tr> <td colspan=100% style="background: white"><h3 class="text-center">{{semester[0].semester + " " + semester[0].year}}</h3></td></tr>
+                        <tr>
+                            <th>Class ID</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Grade</th>
+                        </tr>
+                        <tr ng-repeat="tclass in semester">
+                            <td>{{tclass.class_id}}</td>
+                            <td>{{tclass.course_name}}</td>
+                            <td>{{tclass.credits}}</td>
+                            <td>{{tclass.enrol_grade | letterGrade }}</td>
+                            {{tclass}}
+                        </tr>
+                        
+                        <tr><td colspan=100% class="text-center" style="background: white"><b>Term GPA:</b> {{ smallGPA[$index]| number : 2}}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

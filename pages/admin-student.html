@@ -1,0 +1,380 @@
+<div class="container marginTopExtra fadeIn">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <p class="tabber" data-toggle="tab" href="#view" ng-click="getAllStudents(); disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View</p>
+        </li>
+        <li>
+            <p class="tabber" data-toggle="tab" href="#add" ng-click="display2=false; display1=true; selectedIndex = 0;"><i class="fa fa-plus" aria-hidden="true"></i>Add</p>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <!-- ADD -------------------------------------------->
+        <div id="add" class="tab-pane fade in">
+            <form name="addForm" class="form-horizontal">
+                <br>
+                <div class="well">
+                    <h4>Personal Information</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="firstname">First name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="student.firstname" class="form-control" id="firstname" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="lastname">Last name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="student.lastname" class="form-control" id="lastname" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">E-mail:</label>
+                        <div class="col-sm-10">
+                            <input type="email" ng-model="student.email" class="form-control" id="email" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="password">Password</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="student.password" class="form-control" id="password" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="phonenumber">Phone number:</label>
+                        <div class="col-sm-10">
+                            <input type="tel" ng-model="student.phonenumber" class="form-control" id="phonenumber" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeaddress">Home address:</label>
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="student.streetaddress" class="form-control" id="streetadress" placeholder="Street address" required> </div>
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="student.city" class="form-control" id="city" placeholder="City" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="states" ng-model="student.state" required>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="zipcode" ng-model="student.zipcode" placeholder="Zipcode" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="gender">Gender:</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" ng-model="student.gender.type" value="male" required>Male </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" ng-model="student.gender.type" value="female">Female </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="birthday">Birthday:</label>
+                        <div class="col-sm-10">
+                            <input type="date" ng-model="student.birthday" class="form-control" id="birthday" required> </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <h4>Academic Information</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="major">Major:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="major" id="major" ng-options="major.major_name for major in majors track by major.major_name" ng-required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="minor">Minor:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="minor" id="minor" ng-options="minor.minor_name for minor in minors track by minor.minor_name" ng-required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="faculty">Advisor:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="faculty" id="faculty" ng-options="faculty.user_fname + ' ' + faculty.user_lname for faculty in facultys track by faculty.faculty_id" required></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" ng-disabled="!addForm.$valid" ng-click="addStudent()" class="btn btn-default btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- VIEW -------------------------------------------->
+        <div id="view" ng-show="display1" class="tab-pane fade in  active">
+            <div class="container search-bar well">
+                <div class="form-group">
+                    <div class="col-sm-2 custom-label">
+                        <label class="control-label pull-right" for="idnumber">Search By</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <select ng-model="selectedfilter" ng-change="studentFilter='';switchInputMethod()" class="form-control" id="idnumber" ng-required>
+                            <option value="firstname">First name</option>
+                            <option value="lastname">Last name</option>
+                            <option value="idnumber">ID#</option>
+                            <option value="All">All</option>
+                        </select>
+                    </div>
+                    <!-- ng-if removes it from the DOM -->
+                    <div class="col-sm-5">
+                        <input type="text" ng-model="studentFilter" class="form-control" id="idnumber" ng-disabled="allowinput"> </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default" ng-click="getStudentById()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <th>Action</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in students" ng-cloak>
+                        <td><a class="btn btn-info btn-sm" ng-click="updateFormData(student);"><i class="fa fa-eye" aria-hidden="true"></i> | View</a></td>
+                        <td>{{ student.user_id }}</td>
+                        <td>{{ student.user_fname + " " + student.user_lname }}</td>
+                        <td>{{ student.user_email }}</td>
+                        <td>{{ student.user_phone }}</td>
+                        <td>{{ student.user_street + ", " + student.user_city + ", " + student.user_state + ", " + student.user_zipcode}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-include="'pages/pagination.htm'"></div>
+        </div>
+        <!-- UPDATE -------------------------------------------->
+        <div id="update" ng-show="display2" class="fade in">
+            <form name="updateForm" class="form-horizontal">
+                <h2 class="text-center"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update a student</h2>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h4>Course Details</h4>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete student?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click="disabledField=!disabledField"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="toggle(); getAllStudents();"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+                    </div>
+                    <hr>
+                    <fieldset ng-disabled="disabledField">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="firstname">First name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="firstname" ng-model="uStudent.firstname" class="form-control" id="firstname" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="lastname">Last name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="lastname" ng-model="uStudent.lastname" class="form-control" id="lastname" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">E-mail:</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="email" ng-model="uStudent.email" class="form-control" id="email" readonly> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="password">Password:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="password" ng-model="uStudent.password" class="form-control" id="password" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="phonenumber">Phone number:</label>
+                            <div class="col-sm-10">
+                                <input type="tel" name="phonenumber" ng-model="uStudent.phonenumber" class="form-control" id="phonenumber" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="homeaddress">Home address:</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="streetadress" ng-model="uStudent.streetaddress" class="form-control" id="streetadress" placeholder="Street address" required> </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="city" ng-model="uStudent.city" class="form-control" id="city" placeholder="City" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="states" id="states" ng-model="uStudent.state" required>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" ng-model="uStudent.zipcode" name="zipcode" class="form-control" id="zipcode" placeholder="Zipcode" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="gender">Gender:</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" ng-model="uStudent.gender" value="male" ng-checked="{{gender==='male'?true:false}}" required>Male </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" ng-model="uStudent.gender" value="female" ng-checked="{{gender==='female'?true:false}}" required>Female </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="birthday">Birthday:</label>
+                            <div class="col-sm-10">
+                                <input type="date" ng-model="uStudent.birthday" class="form-control" id="birthday" value="{{birthday}}" required> </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="well">
+                    <h4>Academic Information</h4>
+                    <hr>
+                    <fieldset ng-disabled="disabledField">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Holds:</label>
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="holds" id="d1" value="1" ng-model="uStudent.academichold">Academic</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="holds" id="d1" value="2" ng-model="uStudent.bursarhold">Bursar</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="holds" id="d1" value="3" ng-model="uStudent.disciplinaryhold">Disciplinary</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="holds" id="d1" value="4" ng-model="uStudent.healthhold">Health</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="major">Major:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="uStudent.major" id="major" ng-options="major as major.major_name for major in majors track by major.major_name" ng-required></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="minor">Minor:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="uStudent.minor" id="minor" ng-options="minor as minor.minor_name for minor in minors track by minor.minor_name" ng-required></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="faculty">Advisor:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="uStudent.faculty" id="faculty" ng-options="faculty.user_fname + ' ' + faculty.user_lname for faculty in facultys track by faculty.faculty_id" ng-required></select>
+                            </div>							
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" ng-disabled="!updateForm.$valid" ng-click="updateStudent()" class="btn btn-default btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        placement: 'left',
+        onConfirm: function() {
+            angular.element($(this)).scope().deleteStudent();
+        }
+    });
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

@@ -1,0 +1,229 @@
+<div class="container marginTopExtra fadeIn">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <p class="tabber" data-toggle="tab" href="#view" ng-click="getAllCourses(); disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View</p>
+        </li>
+        <li>
+            <p class="tabber" data-toggle="tab" href="#add" ng-click="display2=false; display1=true; selectedIndex = 0;"><i class="fa fa-plus" aria-hidden="true"></i>Add</p>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <!-- ADD -------------------------------------------->
+        <div id="add" class="tab-pane fade in">
+            <form name="addForm" class="form-horizontal">
+                <br>
+                <div class="well">
+                    <h4>Course Information</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="firstname">Course ID:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="course.crn" class="form-control" id="firstname" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="lastname">Course Title:</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="course.title" class="form-control" id="lastname" required> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Description:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" ng-model="course.desc" rows="5" id="comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="password">Course Status</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="states" ng-model="course.status" required>
+                                <option value="A">Active</option>
+                                <option value="I">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Department</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="course.department" id="departments" ng-options="department as department.department_name for department in departments track by department.department_name" ng-required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="password">Credit Hours</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="states" ng-model="course.credits" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="prereq" ng-repeat="prereq in prereqs">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="firstname">Prerequisite ID:</label>
+                            <div class="col-sm-9">
+                                <input type="text" ng-model="prereq.courseID" class="form-control" ng-required> </div>
+                            <div class="col-sm-1">
+                                <button class="btn btn-danger btn-large btn-block" ng-click="removePrereq()"><i class="fa fa-trash " aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="addprereq"> <a class="btn btn-primary text-right" href="" ng-click="addPrereq()">Add Prerequisite</a> </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" ng-disabled="!addForm.$valid" ng-click="addCourse()" class="btn btn-default btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- VIEW -------------------------------------------->
+        <div id="view" ng-show="display1" class="tab-pane fade in active">
+            <div class="container search-bar well">
+                <div class="form-group">
+                    <div class="col-sm-2 custom-label">
+                        <label class="control-label pull-right" for="idnumber">Search By</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <select ng-model="selectedfilter" ng-change="coursefilter='';switchInputMethod()" class="form-control" id="idnumber" ng-required>
+                            <option value="CRN">Course ID</option>
+                            <option value="Title">Title</option>
+                            <option value="Department">Department</option>
+                            <option value="All">All</option>
+                        </select>
+                    </div>
+                    <!-- ng-if removes it from the DOM -->
+                    <div class="col-sm-5" ng-show="otheroptiontextfield">
+                        <input type="text" ng-model="coursefilter" class="form-control" id="idnumber" ng-disabled="allowinput"> </div>
+                    <div class="col-sm-5" ng-show="departmentdropdownlist">
+                        <select class="form-control" ng-model="department" id="departments" ng-options="department.department_name for department in departments track by department.department_name" ng-required></select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default" ng-click="getCourseById()">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <th>Action</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Department</th>
+                    <th>Description</th>
+                    <th>Credits</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="crc in courses" ng-cloak>
+                        <td><a class="btn btn-info btn-sm" href="" ng-click="updateformdata(crc)"><i class="fa fa-eye" aria-hidden="true"></i> | View</a></td>
+                        <td>{{crc.course_id}}</td>
+                        <td>{{crc.course_name}}</td>
+                        <td>{{crc.department}}</td>
+                        <td>{{crc.course_description }}</td>
+                        <td>{{crc.credits }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-include="'pages/pagination.htm'"></div>
+        </div>
+        <!-- UPDATE -------------------------------------------->
+        <div id="update" ng-show="display2" class="fade in">
+            <form name="updateForm" class="form-horizontal">
+                <h2 class="text-center"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update a course</h2>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h4>Course Details</h4> </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete student?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click="disabledField=!disabledField"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="getAllCourses();toggle();"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+                    </div>
+                    <hr>
+                    <fieldset ng-disabled="disabledField">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="title">Course Title:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="crctitle" class="form-control" id="lastname" required> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="desciption">Description:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" ng-model="crcdesc" rows="5" id="comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="password">Course Status</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="states" ng-model="crcstatus" required>
+                                    <option value="A">Active</option>
+                                    <option value="I">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Department</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="selecteddepartment" ng-options="department as department.department_name for department in departments track by department.department_name"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="password">Credit Hours</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="states" ng-model="crccredits" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- prereqForCourse-->
+                        <div ng-repeat="pre in prereqForCourse">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="title">Prereq CourseID:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" ng-model="pre.prereq_id" class="form-control" id="lastname" required> </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger btn-large btn-block" ng-click="removePrereqForCourse()"><i class="fa fa-trash " aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="addprereq"> <a href="" class="btn btn-primary text-right" ng-click="addPrereqForCourse()">Add Prerequisite</a> </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" ng-disabled="!updateForm.$valid" ng-click="updateCourse()" class="btn btn-default btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    //This code does not work for some reason
+    $('#pageLinks').on("click", function () {
+        console.log("I am here");
+        //$('#shrink-options li.active').removeClass('active');
+        // $(this).addClass('active');        
+    });
+    $('#shrink-options ul li').on("click", function () {
+        console.log("I am here");
+        //$('#shrink-options li.active').removeClass('active');
+        // $(this).addClass('active');        
+    });
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]'
+        , placement: 'left'
+        , onConfirm: function () {
+                console.log("delete successful");
+                angular.element($(this)).scope().deleteCourse(); //this is the document itself
+            }
+            // other options
+    });
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

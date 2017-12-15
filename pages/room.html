@@ -1,0 +1,141 @@
+<div class="container marginTopExtra fadeIn">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<p class="tabber" data-toggle="tab" href="#view" ng-click="getAllRooms(); disabledField = true;"><i class="fa fa-eye" aria-hidden="true"></i>View</p>
+		</li>
+		<li>
+			<p class="tabber" data-toggle="tab" href="#add" ng-click="display2=false; display1=true; selectedIndex = 0;"><i class="fa fa-plus" aria-hidden="true"></i>Add</p>
+		</li>
+
+	</ul>
+	<div class="tab-content">
+
+		<!-- ADD -------------------------------------------->
+
+		<div id="add" class="tab-pane fade in ">
+			<form name="addForm" class="form-horizontal">
+				<br>
+				<div class="well">
+					<h4>Room Information</h4>
+					<hr>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="buildingname">Building Name:</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="buildingname" ng-model="room.buildingName" required>
+                                <option value="Campus Center">Campus Center</option>
+                                <option value="Clark Athletic Center">Clark Athletic Center</option>
+                                <option value="Natural Sciences">Natural Sciences</option>
+                                <option value="New Academic Building">New Academic Building</option>
+                                <option value="Student Union">Student Union</option>
+                            </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="roomnumber">Room Number:</label>
+						<div class="col-sm-10">
+							<input type="text" ng-model="room.number" class="form-control" id="roomnumber" required> </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="capacity">Capacity:</label>
+						<div class="col-sm-10">
+							<input type="text" ng-model="room.capacity" class="form-control" id="capacity" required> </div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" ng-disabled="!addForm.$valid" ng-click="addRoom()" class="btn btn-default btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- VIEW -------------------------------------------->
+
+		<div id="view" ng-show="display1" class="tab-pane fade in active">
+			<h2 class="text-center"><i class="fa fa-eye" aria-hidden="true"></i> View Rooms</h2>
+			<table class="table table-striped">
+				<thead>
+					<th>Action</th>
+					<th>Room Number</th>
+					<th>Building Name</th>
+					<th>Capacity</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="room in rooms">
+						<td><a class="btn btn-info btn-sm" ng-click="updateFormData(room);"><i class="fa fa-eye" aria-hidden="true"></i> | View </a></td>
+						<td>{{ room.room_number }}</td>
+						<td>{{ room.building_name }}</td>
+						<td>{{ room.room_capacity }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--<nav aria-label="...">
+				<ul class="pagination text-center">
+					<li ng-class="{active: $index===selectedIndex}" class="page-item" ng-repeat="page in pagesCollection track by $index"> <a class="page-link" id="pageLinks" href="" ng-click="itemClicked($index); movePage(page-1);">{{page}}</a> </li>
+				</ul>
+			</nav>-->
+
+			  <div ng-include="'pages/pagination.htm'"></div>
+		</div>
+
+		<!-- UPDATE -------------------------------------------->
+
+		<div id="update" ng-show="display2" class="fade in">
+			<form name="updateForm" class="form-horizontal">
+				<br>
+				<div class="well">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6">
+							<h4>Room Details</h4>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6"> <span class="pull-right" data-toggle="tooltip" title="Delete"><a class="btn btn-large btn-danger pull-right" data-toggle="confirmation" data-title="Delete room?"><i class="fa fa-trash " aria-hidden="true"></i></a></span> <a data-toggle="tooltip" title="Edit" class="btn btn-large btn-primary pull-right" ng-click="disabledField = !disabledField"><i class="fa fa-pencil " aria-hidden="true"></i></a> <a data-toggle="tooltip" title="Go Back" class="btn btn-large btn-default pull-right" ng-click="toggle()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
+					</div>
+					<hr>
+					<fieldset ng-disabled="disabledField">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="buildingname">Building Name:</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="buildingname" ng-model="uRoom.buildingName" disabled>
+                                    <option value="Campus Center">Campus Center</option>
+                                    <option value="Clark Athletic Center">Clark Athletic Center</option>
+                                    <option value="Natural Sciences">Natural Sciences</option>
+                                    <option value="New Academic Building">New Academic Building</option>
+                                    <option value="Student Union">Student Union</option>
+                                </select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="roomnumber">Room Number:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="uRoom.number" class="form-control" id="roomnumber" disabled> </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="capacity">Capacity:</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="uRoom.capacity" class="form-control" id="capacity" required> </div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" ng-disabled="!updateForm.$valid" ng-click="updateRoom()" class="btn btn-default btn-block">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+		placement: 'left',
+		onConfirm: function() {
+			angular.element($(this)).scope().deleteRoom();
+		}
+	});
+
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>

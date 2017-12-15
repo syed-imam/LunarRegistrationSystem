@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='LunarRegistrationSystem'>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Lunar Registration Systems - Online Registration System">
+    <meta name="author" content="Adil Imam, Ali Kutluozen, Josh Joseph">
+    <title>Lunar Registration System</title>
+    <!-- Bootstrap core CSS -->
+    <link href="style/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="style/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/logo.png" type="image/png">
+</head>
+
+<body ng-controller="mainController">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+
+                <a href="#!/" class="navbar-left"><img src="images/logo.png" alt="logo" class="logoLunar"></a>
+
+                <a class="navbar-brand" href="#!/"> &nbsp;&nbsp;&nbsp;&nbsp;A&Z College</a>
+
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+
+                    <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/missionStatement">Mission Statement</a></li>
+                            <li><a href="">Events Calendar</a></li>
+                            <li><a href="">History</a></li>
+                            <li><a href="">Contact Us</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admission<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="">Degree Programs</a></li>
+                            <li><a href="">Non Degree Programs</a></li>
+                            <li><a href="">Freshman Admissions</a></li>
+                            <li><a href="">Transfer Admissions</a></li>
+                            <li><a href="">Tution and Fees</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria- expanded="false">Academics <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="">Majors and Programs</a></li>
+                            <li><a href="">School of Arts and Science</a></li>
+                            <li><a href="">School of Business</a></li>
+                            <li><a href="">School of Education</a></li>
+                            <li><a href="">School of Professional Studies</a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Giving<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="">College Fundraiser</a></li>
+                            <li><a href="">Ways to Give</a></li>
+                            <li><a href="">Faq</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="loggedIn && loggedtype == 2"><a href="#!/admin"><i class="fa fa-cogs" aria-hidden="true"></i> Admin</a></li>
+                    <li ng-if="loggedIn && loggedtype == 1"><a href="#!/student-panel"><i class="fa fa-cogs" aria-hidden="true"></i> Panel</a></li>
+                    <li ng-if="loggedIn && loggedtype == 3"><a href="#!/faculty-panel"><i class="fa fa-cogs" aria-hidden="true"></i> Panel</a></li>
+                    <li ng-if="loggedIn && loggedtype == 4"><a href="#!/researcher-panel"><i class="fa fa-cogs" aria-hidden="true"></i> Researcher</a></li>					
+                    <li><a href="#!/support"><i class="fa fa-question-circle" aria-hidden="true"></i> Support</a></li>
+                    <li ng-if="!loggedIn"><a href="#!/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Log in</a></li>
+                    <li ng-if="loggedIn"><a href="#!/" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <div class="ng-view">
+
+    </div>
+
+    <!-- Messages -->
+    <div ng-show="message" class="modalMessage">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Message</h4> </div>
+                <div class="modal-body">
+                    <p ng-model="message">{{message}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">Lunar Registration Systems - All Right Reserved. 2017. </p>
+        </div>
+    </footer>
+    <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="javascript/vendor/bootstrap-confirmation.min.js"></script>
+    <script src="angularjs/angular.min.js"></script>
+    <script src="angularjs/angular-route.min.js"></script>
+    <script src="angularjs/angular-cookie.min.js"></script>
+    <script src="javascript/app.js"></script>
+    <script src="javascript/controllers/main.controller.js"></script>
+    <script src="javascript/controllers/student.controller.js"></script>
+    <script src="javascript/controllers/faculty.controller.js"></script>
+    <script src="javascript/controllers/course.controller.js"></script>
+    <script src="javascript/controllers/class.controller.js"></script>
+    <script src="javascript/controllers/department.controller.js"></script>
+    <script src="javascript/controllers/room.controller.js"></script>
+    <script src="javascript/controllers/major-minor.controller.js"></script>
+    <script src="javascript/controllers/student.class.controller.js"></script>
+    <script src="javascript/controllers/faculty.panel.controller.js"></script>
+	<script src="javascript/controllers/researcher.panel.controller.js"></script>
+    <script src="javascript/services/service.js"></script>
+</body>
+
+</html>
